@@ -24,8 +24,8 @@ lazy val scalatestsuite = (project in file("."))
   .settings(commonSettings: _*)
   .settings(
     name := "scalatestsuite",
-    javacOptions ++= Seq("-source", "1.11", "-target", "1.11"),
-    scalacOptions := Seq("-target:jvm-1.11"),
+    javacOptions ++= Seq("-source", "11", "-target", "11"),
+    scalacOptions := Seq("-target:jvm-11"),
     libraryDependencies ++= Seq(
       "ndla" %% "network" % "0.44",
       "org.scalatest" %% "scalatest" % ScalaTestVersion,
