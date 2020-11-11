@@ -67,3 +67,8 @@ publishTo := {
   else
     Some("releases" at nexus + "content/repositories/ndla-releases")
 }
+
+resolvers ++= scala.util.Properties
+  .envOrNone("NDLA_RELEASES")
+  .map(repo => "Release Sonatype Nexus Repository Manager" at repo)
+  .toSeq
