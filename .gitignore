@@ -8,5 +8,6 @@
 
 .bloop/
 .metals/
+.bsp/
 project/metals.sbt
 .vscode
