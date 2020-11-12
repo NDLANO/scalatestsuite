@@ -82,5 +82,9 @@ abstract class IntegrationSuite(
   }
 
   override def beforeAll(): Unit = setDatabaseEnvironment()
-  override def afterAll(): Unit = setPropEnv(previousDatabaseEnv)
+  override def afterAll(): Unit = {
+    setPropEnv(previousDatabaseEnv)
+    elasticSearchContainer.map(c => c.stop())
+    postgresContainer.map(c => c.stop())
+  }
 }
