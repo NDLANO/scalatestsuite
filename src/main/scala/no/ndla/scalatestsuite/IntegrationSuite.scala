@@ -18,18 +18,24 @@ abstract class IntegrationSuite(
     EnableElasticsearchContainer: Boolean = false,
     EnablePostgresContainer: Boolean = false,
     PostgresqlVersion: String = "12.4",
-    ElasticsearchVersion: String = "6.3.2",
+    ElasticsearchImage: String = "d63726c", // elasticsearch 6.8.4
     schemaName: String = "testschema"
 ) extends UnitTestSuite {
 
   val elasticSearchContainer: Try[ElasticsearchContainer] = if (EnableElasticsearchContainer) {
     Try {
-      val container = new ElasticsearchContainer(s"docker.elastic.co/elasticsearch/elasticsearch:$ElasticsearchVersion")
+      val container = new ElasticsearchContainer(
+        s"950645517739.dkr.ecr.eu-central-1.amazonaws.com/ndla/search-engine:$ElasticsearchImage")
       container.start()
       container
     }
   } else { Failure(new RuntimeException("Search disabled for this IntegrationSuite")) }
-  val elasticSearchHost: Try[String] = elasticSearchContainer.map(c => s"http://${c.getHttpHostAddress}")
+
+  val elasticSearchHost: Try[String] = elasticSearchContainer.map(c => {
+    val addr = s"http://${c.getHttpHostAddress}"
+    println(s"Running '${this.getClass.getName}' elasticsearch at $addr")
+    addr
+  })
 
   val postgresContainer: Try[PostgreSQLContainer[Nothing]] = if (EnablePostgresContainer) {
     val username = "postgres"
