@@ -21,7 +21,7 @@ jobs:
         uses: actions/cache@v1
         with:
           path: ~/.cache/coursier
-          key: ${{ runner.OS }}-coursier-cache-${{ matrix.scala }}-${{ hashFiles('**/*.sbt') }} # -${{ hashFiles('project/**.scala') }} (fails for now)
+          key: ${{ runner.OS }}-coursier-cache-${{ matrix.scala }}-${{ hashFiles('**/*.sbt') }}
           restore-keys: |
             ${{ runner.OS }}-coursier-cache-${{ matrix.scala }}-${{ hashFiles('**/*.sbt') }}-
             ${{ runner.OS }}-coursier-cache-${{ matrix.scala }}-
