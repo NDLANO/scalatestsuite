@@ -6,7 +6,7 @@ val FlywayVersion = "7.1.1"
 val PostgresVersion = "42.2.14"
 val HikariConnectionPoolVersion = "3.4.5"
 val CatsEffectVersion = "2.1.1"
-val TestContainersVersion = "1.12.2"
+val TestContainersVersion = "1.15.1"
 
 val ScalaTestVersion = "3.2.1"
 

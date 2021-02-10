@@ -11,6 +11,7 @@ import com.zaxxer.hikari.{HikariConfig, HikariDataSource}
 import no.ndla.network.secrets.PropertyKeys
 import org.testcontainers.containers.PostgreSQLContainer
 import org.testcontainers.elasticsearch.ElasticsearchContainer
+import org.testcontainers.utility.DockerImageName
 
 import scala.util.{Failure, Success, Try}
 
@@ -23,9 +24,13 @@ abstract class IntegrationSuite(
 ) extends UnitTestSuite {
 
   val elasticSearchContainer: Try[ElasticsearchContainer] = if (EnableElasticsearchContainer) {
+    val imgName = s"950645517739.dkr.ecr.eu-central-1.amazonaws.com/ndla/search-engine:$ElasticsearchImage"
+    val searchEngineImage = DockerImageName
+      .parse(imgName)
+      .asCompatibleSubstituteFor("docker.elastic.co/elasticsearch/elasticsearch")
+
     Try {
-      val container = new ElasticsearchContainer(
-        s"950645517739.dkr.ecr.eu-central-1.amazonaws.com/ndla/search-engine:$ElasticsearchImage")
+      val container = new ElasticsearchContainer(searchEngineImage)
       container.start()
       container
     }
